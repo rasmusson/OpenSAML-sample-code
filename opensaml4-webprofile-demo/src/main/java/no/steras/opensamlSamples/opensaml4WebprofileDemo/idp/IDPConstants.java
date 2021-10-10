@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.idp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.idp;
 
 public class IDPConstants {
 	public static final String IDP_ENTITY_ID = "TestIDP";

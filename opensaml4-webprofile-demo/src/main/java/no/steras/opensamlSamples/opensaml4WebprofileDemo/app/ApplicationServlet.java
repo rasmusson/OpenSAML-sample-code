@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.app;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.app;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

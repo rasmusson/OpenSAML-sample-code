@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.idp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.idp;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -53,9 +53,9 @@ import org.slf4j.LoggerFactory;
 
 import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
-import no.steras.opensamlbook.OpenSAMLUtils;
-import no.steras.opensamlbook.sp.SPConstants;
-import no.steras.opensamlbook.sp.SPCredentials;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.OpenSAMLUtils;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.sp.SPConstants;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.sp.SPCredentials;
 
 public class ArtifactResolutionServlet extends HttpServlet {
 	private static Logger logger = LoggerFactory.getLogger(ArtifactResolutionServlet.class);

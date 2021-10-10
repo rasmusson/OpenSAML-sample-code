@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.sp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.sp;
 
 import java.io.IOException;
 import java.security.Provider;
@@ -41,8 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
-import no.steras.opensamlbook.OpenSAMLUtils;
-import no.steras.opensamlbook.idp.IDPConstants;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.OpenSAMLUtils;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPConstants;
 
 /**
  * The filter intercepts the user and start the SAML authentication if it is not

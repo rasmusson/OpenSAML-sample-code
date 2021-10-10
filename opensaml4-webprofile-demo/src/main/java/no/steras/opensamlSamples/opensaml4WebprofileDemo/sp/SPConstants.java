@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.sp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.sp;
 
 /**
  * Created by Privat on 4/7/14.

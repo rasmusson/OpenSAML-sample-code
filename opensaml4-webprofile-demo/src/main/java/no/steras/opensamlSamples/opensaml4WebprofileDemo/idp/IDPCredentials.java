@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.idp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.idp;
 
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialSupport;

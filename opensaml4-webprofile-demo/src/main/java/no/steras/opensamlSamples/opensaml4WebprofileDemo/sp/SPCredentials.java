@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.sp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.sp;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.Criterion;

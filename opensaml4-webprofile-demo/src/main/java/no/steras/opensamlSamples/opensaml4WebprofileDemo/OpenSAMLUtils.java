@@ -1,4 +1,4 @@
-package no.steras.opensamlbook;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo;
 
 import java.io.StringWriter;
 

@@ -1,8 +1,9 @@
-package no.steras.opensamlbook.idp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.idp;
 
-import no.steras.opensamlbook.sp.SPConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.sp.SPConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

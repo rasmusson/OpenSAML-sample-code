@@ -1,4 +1,4 @@
-package no.steras.opensamlbook.sp;
+package no.steras.opensamlSamples.opensaml4WebprofileDemo.sp;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -53,9 +53,9 @@ import org.slf4j.LoggerFactory;
 
 import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
 import net.shibboleth.utilities.java.support.httpclient.HttpClientBuilder;
-import no.steras.opensamlbook.OpenSAMLUtils;
-import no.steras.opensamlbook.idp.IDPConstants;
-import no.steras.opensamlbook.idp.IDPCredentials;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.OpenSAMLUtils;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPConstants;
+import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPCredentials;
 
 /**
  * Created by Privat on 4/6/14.
