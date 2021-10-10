@@ -16,4 +16,5 @@ mvn tomcat:run
 ```
 
 Then open a browser and navigate to http://localhost:8080/opensaml4-webprofile-demo/app/appservlet
+
 All SAML messages used during the communication are logged to the console.
