@@ -7,19 +7,19 @@
 
     <servlet>
         <servlet-name>ApplicationServlet</servlet-name>
-        <servlet-class>no.steras.opensamlbook.app.ApplicationServlet</servlet-class>
+        <servlet-class>no.steras.opensamlSamples.opensaml4WebprofileDemo.app.ApplicationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SingleSignOnService</servlet-name>
-        <servlet-class>no.steras.opensamlbook.idp.SingleSignOnServlet</servlet-class>
+        <servlet-class>no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.SingleSignOnServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConsumerServlet</servlet-name>
-        <servlet-class>no.steras.opensamlbook.sp.ConsumerServlet</servlet-class>
+        <servlet-class>no.steras.opensamlSamples.opensaml4WebprofileDemo.sp.ConsumerServlet</servlet-class>
     </servlet>
 	<servlet>
         <servlet-name>ArtifactResolutionServlet</servlet-name>
-        <servlet-class>no.steras.opensamlbook.idp.ArtifactResolutionServlet</servlet-class>
+        <servlet-class>no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.ArtifactResolutionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -41,7 +41,7 @@
 
     <filter>
         <filter-name>AccessFilter</filter-name>
-        <filter-class>no.steras.opensamlbook.sp.AccessFilter</filter-class>
+        <filter-class>no.steras.opensamlSamples.opensaml4WebprofileDemo.sp.AccessFilter</filter-class>
     </filter>
 
     <filter-mapping>
