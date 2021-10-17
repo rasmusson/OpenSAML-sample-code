@@ -1,19 +1,20 @@
-# Demo of SP and IdP interacting using OpenSAML 4
-This code shows a simulation of how a SP and a IdP might communicate using SAML. Variations on this demo is used exensivley in the books [A Guide to OpenSAML V2](https://payhip.com/b/odEY) and [A Guide to OpenSAML V3](https://payhip.com/b/41Tw).
+# Demo code on HTTP POST in OpenSAML 4
+This code shows a how to use the HTTPPostEncoder and HTTPPostDecoder in OpenSMAL 4 to send a receive messages using the HTTP POST binding.
 
-The demo code sets up several servlets acting as different endpoints on SP, IdP and business application.
+The code is explained with more detail and backgound on [this blog post](https://blog.samlsecurity.com/post/post-binding-opensaml-4/?utm_source=github&utm_medium=link&utm_campaign=opensaml_samples_collection&utm_content=http-post-binding)
 
-The demo acts a good overview guide to OpenSAML demonstrating:
-* Building, singing and sending a AuthnRequest using HTTP Redirect binding
-* Parsing and verifying signatures on AuthnRequest
-* Sending a Response message using the Artifact binding
-* Encrypting and decryoting a Assertion
+The demo sets up two servlets acting as sender and reciever of the a message.
+
+The code shows:
+* All dependecied needed
+* Initializing OpenSAML
+* Sending and receiving messages using OpenSAML 4
 
 ## Runing the code
-Clone the code, navigate to the folder for this sample and run: 
+Clone this repo, navigate to the folder for this sample and run: 
 ```
 mvn tomcat:run
 ```
 
-Then open a browser and navigate to http://localhost:8080/opensaml4-webprofile-demo/app/appservlet
+Then open a browser and navigate to http://localhost:8080/opensaml-http-post/postPage
 All SAML messages used during the communication are logged to the console.
