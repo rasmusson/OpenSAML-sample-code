@@ -5,3 +5,5 @@ These are the current samples in the collection
 
 * [Getting started with OpenSAML and building AuthnRequest](getting-started-authnrequest) 
 * [Complete demo of SP and IdP interacting with OpenSAML](opensaml4-webprofile-demo)
+* [Sending and receiving messages using HTTP Redirect](opensaml-http-redirect)
+* [Sending and receiving messages using HTTP Redirect](opensaml-http-post)
