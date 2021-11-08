@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="sender.example.com">
+  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIDdzCCAl+gAwIBAgIECqnfAzANBgkqhkiG9w0BAQsFADBsMRAwDgYDVQQGEwdVbmtub3duMRAwDgYDVQQIEwdVbmtub3duMRAwDgYDVQQHEwdVbmtub3duMRAwDgYDVQQKEwdVbmtub3duMRAwDgYDVQQLEwdVbmtub3duMRAwDgYDVQQDEwdVbmtub3duMB4XDTIxMTEwODE4NDEzOFoXDTIyMDIwNjE4NDEzOFowbDEQMA4GA1UEBhMHVW5rbm93bjEQMA4GA1UECBMHVW5rbm93bjEQMA4GA1UEBxMHVW5rbm93bjEQMA4GA1UEChMHVW5rbm93bjEQMA4GA1UECxMHVW5rbm93bjEQMA4GA1UEAxMHVW5rbm93bjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJdGKCdy0c3CeCFCUidx859yBMXcHyOpGScw4wvk1xRX87a9xzqxel/YJrushV+vylTo472QY1CrpuqSRhuGLKgqlb5I/yo7uLhiL20bJToxR9rSOeIuMGcAPpu9VQ0/MR5wKoQjZiYAfaHrYBK3O0jdzo1TlhlWpsurULurxr/LD19BNaYgkvHrxjUFsO7pcmg3KRaZpH0eRTXI+Taip6MspoRjcLjnROXiYGDGrlmNSG+VbSapQDlmzjJaBJmqUU+0Fe5GagxSB5l/hOY46T18rr/OGhTPxrFQljpR/N4BPwG2iawwFp+E/IzACbNSUOlcTP9Pf39vPF+XhRmKGK0CAwEAAaMhMB8wHQYDVR0OBBYEFDQQyF+Lcv97GDXGIIgSE9WRvAL/MA0GCSqGSIb3DQEBCwUAA4IBAQAKJY81c21vP5ZtmTsGFHqMKp7nYFNMk2ukkwFW5EUa6cuwgs4n4Kq0RwjGnc0c/isXpZJIKMl1Q6rU4mwQvgqphLXgiGCU+hQmwH8uOtAQxWK/kTrE7FtaTpuhco42wu1+ORNyOa2XNq6Ueivd77NxIwfaGLBSOi4u8gpGUSwmQYY7RkfUtEgbxmrNeu1kx7ikC1OU5/IM/E3nBgFiH1zBKnhxqJgUeMAsOZspGCTw8IEkK3I4RzvaYM63bJTqRl6uYZK/8XwX2AQEbjtwdTAqcpIB5DnboczVjwYvOLrr/7oPApjvX+bOBtbXEF2HJsAZF0Q7e9gXvSIg6QnOJdoH</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+  </md:SPSSODescriptor>
+</md:EntityDescriptor>
