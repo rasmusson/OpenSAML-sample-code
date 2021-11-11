@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.binding.security.impl.SAMLProtocolMessageXMLSignatureSecurityHandler;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
+import org.opensaml.saml.common.messaging.context.SAMLProtocolContext;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.criterion.EntityRoleCriterion;
 import org.opensaml.saml.criterion.ProtocolCriterion;
@@ -21,12 +24,16 @@ import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.saml.security.impl.SAMLSignatureProfileValidator;
+import org.opensaml.security.SecurityException;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
+import org.opensaml.xmlsec.SignatureValidationParameters;
 import org.opensaml.xmlsec.config.impl.DefaultSecurityConfigurationBootstrap;
+import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
 import org.opensaml.xmlsec.signature.support.SignatureValidator;
+import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,8 +57,10 @@ public class ReceiverServlet extends HttpServlet {
 			decoder.decode();
 			MessageContext messageContext = decoder.getMessageContext();
 			authnRequest = (AuthnRequest) messageContext.getMessage();
+			logger.info("verifySignatureUsingSignatureValidator");
 			verifySignatureUsingSignatureValidator(authnRequest);
-			verifySignatureUsingTrustEngine(authnRequest);
+			logger.info("verifySignatureUsingMessageHandler");
+			verifySignatureUsingMessageHandler(messageContext);
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -115,7 +124,38 @@ public class ReceiverServlet extends HttpServlet {
 		logger.info("Signature verified using SignatureValidator");
 	}
 
-	private void verifySignatureUsingTrustEngine(AuthnRequest authnRequest) {
+	private ExplicitKeySignatureTrustEngine buildTrustEngine() throws Exception {
+		final KeyInfoCredentialResolver keyInfoResolver = DefaultSecurityConfigurationBootstrap
+				.buildBasicInlineKeyInfoCredentialResolver();
+		ExplicitKeySignatureTrustEngine trustEngine = new ExplicitKeySignatureTrustEngine(
+				getMetadataCredentialResolver(), keyInfoResolver);
 
+		return trustEngine;
+
+	}
+
+	private SignatureValidationParameters buildSignatureValidationParameters() throws Exception {
+		SignatureValidationParameters validationParameters = new SignatureValidationParameters();
+		validationParameters.setSignatureTrustEngine(buildTrustEngine());
+		return validationParameters;
+	}
+
+	private void verifySignatureUsingMessageHandler(MessageContext context) throws Exception {
+		SecurityParametersContext secParamsContext = context.getSubcontext(SecurityParametersContext.class, true);
+		secParamsContext.setSignatureValidationParameters(buildSignatureValidationParameters());
+
+		SAMLPeerEntityContext peerEntityContext = context.getSubcontext(SAMLPeerEntityContext.class, true);
+		peerEntityContext.setEntityId(SENDER_ENTITY_ID);
+		peerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
+
+		SAMLProtocolContext protocolContext = context.getSubcontext(SAMLProtocolContext.class, true);
+		protocolContext.setProtocol(SAMLConstants.SAML20P_NS);
+
+		SAMLProtocolMessageXMLSignatureSecurityHandler signatureValidationHanlder = new SAMLProtocolMessageXMLSignatureSecurityHandler();
+		signatureValidationHanlder.invoke(context);
+
+		if (!peerEntityContext.isAuthenticated()) {
+			throw new SecurityException("Message not signed");
+		}
 	}
 }
