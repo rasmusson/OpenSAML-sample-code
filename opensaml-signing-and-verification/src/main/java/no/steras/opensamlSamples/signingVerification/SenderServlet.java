@@ -86,8 +86,8 @@ public class SenderServlet extends HttpServlet {
 
 		resp.setContentType("text/html");
 		w.append("<html>" + "<head></head>"
-				+ "<body><h1>Click the button to send the AuthnRequest using HTTP POST</h1> <form method=\"POST\">"
-				+ "<input type=\"submit\" value=\"Send\"/>" + "</form>" + "</body>" + "</html>");
+				+ "<body><h1>Click the button to sign a message and send it and validate the signature in the reciever.</h1> <form method=\"POST\">"
+				+ "<input type=\"submit\" value=\"Go!\"/>" + "</form>" + "</body>" + "</html>");
 	}
 
 	@Override
