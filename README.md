@@ -3,7 +3,8 @@ Here I collect all code samples for OpenSAML from my books and my blog [https://
 
 These are the current samples in the collection
 
-* [Getting started with OpenSAML and building AuthnRequest](getting-started-authnrequest) 
-* [Complete demo of SP and IdP interacting with OpenSAML](opensaml4-webprofile-demo)
+* [Getting started with OpenSAML 4 and building AuthnRequest](getting-started-authnrequest) 
+* [Complete demo of SP and IdP interacting with OpenSAML 4](opensaml4-webprofile-demo)
 * [Sending and receiving messages using HTTP Redirect](opensaml-http-redirect)
 * [Sending and receiving messages using HTTP Post](opensaml-http-post)
+* [OpenSAML 4 signing and signature verification](opensaml-signing-and-verification)
