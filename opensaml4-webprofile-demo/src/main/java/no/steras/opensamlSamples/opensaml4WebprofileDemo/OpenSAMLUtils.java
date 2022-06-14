@@ -1,15 +1,6 @@
 package no.steras.opensamlSamples.opensaml4WebprofileDemo;
 
-import java.io.StringWriter;
-
 import javax.xml.namespace.QName;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.XMLObjectBuilderFactory;
@@ -22,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 import net.shibboleth.utilities.java.support.security.impl.RandomIdentifierGenerationStrategy;
+import net.shibboleth.utilities.java.support.xml.SerializeSupport;
 
 /**
  * Created by Privat on 4/6/14.
@@ -71,20 +63,9 @@ public class OpenSAMLUtils {
 			}
 		}
 
-		try {
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			StreamResult result = new StreamResult(new StringWriter());
-			DOMSource source = new DOMSource(element);
+		String xmlString = SerializeSupport.prettyPrintXML(element);
 
-			transformer.transform(source, result);
-			String xmlString = result.getWriter().toString();
+		logger.info(xmlString);
 
-			logger.info(xmlString);
-		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			e.printStackTrace();
-		}
 	}
 }
