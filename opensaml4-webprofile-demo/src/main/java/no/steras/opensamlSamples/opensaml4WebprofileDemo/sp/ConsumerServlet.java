@@ -85,7 +85,7 @@ public class ConsumerServlet extends HttpServlet {
 		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
 		//Assertion assertion = decryptAssertion(encryptedAssertion);
 		Assertion assertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
-		verifyAssertionSignature(unencassertion);
+		verifyAssertionSignature(assertion);
 		logger.info("Decrypted Assertion: ");
 		//logger.info("Unencrypted Assertion: ");
 		//OpenSAMLUtils.logSAMLObject(assertion);
