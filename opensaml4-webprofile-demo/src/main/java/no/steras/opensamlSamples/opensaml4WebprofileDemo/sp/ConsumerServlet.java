@@ -83,15 +83,15 @@ public class ConsumerServlet extends HttpServlet {
 		validateDestinationAndLifetime(artifactResponse, req);
 
 		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
-		Assertion assertion = decryptAssertion(encryptedAssertion);
-		Assertion unencassertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
+		//Assertion assertion = decryptAssertion(encryptedAssertion);
+		Assertion assertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
 		verifyAssertionSignature(unencassertion);
 		logger.info("Decrypted Assertion: ");
 		//logger.info("Unencrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(assertion);
+		//OpenSAMLUtils.logSAMLObject(assertion);
 
 		logger.info("Unencrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(unencassertion);
+		OpenSAMLUtils.logSAMLObject(assertion);
 		logAssertionAttributes(assertion);
 		logAuthenticationInstant(assertion);
 		logAuthenticationMethod(assertion);
