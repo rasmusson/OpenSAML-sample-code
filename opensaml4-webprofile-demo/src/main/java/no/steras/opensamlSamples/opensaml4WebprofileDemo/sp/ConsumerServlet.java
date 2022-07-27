@@ -84,10 +84,14 @@ public class ConsumerServlet extends HttpServlet {
 
 		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
 		Assertion assertion = decryptAssertion(encryptedAssertion);
-		verifyAssertionSignature(assertion);
+		Assertion unencassertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
+		verifyAssertionSignature(unencassertion);
 		logger.info("Decrypted Assertion: ");
+		//logger.info("Unencrypted Assertion: ");
 		OpenSAMLUtils.logSAMLObject(assertion);
 
+		logger.info("Unencrypted Assertion: ");
+		OpenSAMLUtils.logSAMLObject(unencassertion);
 		logAssertionAttributes(assertion);
 		logAuthenticationInstant(assertion);
 		logAuthenticationMethod(assertion);
@@ -156,7 +160,7 @@ public class ConsumerServlet extends HttpServlet {
 
 			logger.info("SAML Assertion signature verified");
 		} catch (SignatureException e) {
-			e.printStackTrace();
+			logger.error("SAML Assertion signature verification failure", e);
 		}
 
 	}

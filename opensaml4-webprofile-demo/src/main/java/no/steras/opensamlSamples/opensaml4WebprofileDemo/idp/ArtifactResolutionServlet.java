@@ -139,9 +139,13 @@ public class ArtifactResolutionServlet extends HttpServlet {
 		Assertion assertion = buildAssertion();
 
 		signAssertion(assertion);
+		response.getAssertions().add(assertion);
 		EncryptedAssertion encryptedAssertion = encryptAssertion(assertion);
 
 		response.getEncryptedAssertions().add(encryptedAssertion);
+		logger.info("Unencrypted Signed SAML Response:");
+		
+		OpenSAMLUtils.logSAMLObject(response);
 		return artifactResponse;
 	}
 
