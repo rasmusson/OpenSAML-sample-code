@@ -82,7 +82,7 @@ public class ConsumerServlet extends HttpServlet {
 
 		validateDestinationAndLifetime(artifactResponse, req);
 
-		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
+		//EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
 		//Assertion assertion = decryptAssertion(encryptedAssertion);
 		Assertion assertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
 		verifyAssertionSignature(assertion);
