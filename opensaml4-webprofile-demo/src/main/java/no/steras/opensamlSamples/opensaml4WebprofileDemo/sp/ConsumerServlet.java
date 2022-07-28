@@ -156,8 +156,12 @@ public class ConsumerServlet extends HttpServlet {
 
 		try {
 			SAMLSignatureProfileValidator profileValidator = new SAMLSignatureProfileValidator();
+			
+			logger.info("SAML Assertion validating profile ... ");
 			profileValidator.validate(assertion.getSignature());
-
+			logger.info("SAML Assertion validate profile successfull ... ");
+			
+			logger.info("SAML Assertion validating signature ... ");
 			SignatureValidator.validate(assertion.getSignature(), IDPCredentials.getCredential());
 
 			logger.info("SAML Assertion signature verified");
