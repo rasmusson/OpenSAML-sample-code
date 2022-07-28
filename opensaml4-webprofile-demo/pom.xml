@@ -8,7 +8,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <opensaml.version>4.1.1</opensaml.version>
+        <opensaml.version>4.2.0</opensaml.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>

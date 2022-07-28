@@ -38,6 +38,7 @@ import org.opensaml.saml.saml2.core.Issuer;
 import org.opensaml.saml.saml2.core.Response;
 import org.opensaml.saml.saml2.encryption.Decrypter;
 import org.opensaml.saml.security.impl.SAMLSignatureProfileValidator;
+import org.opensaml.security.credential.Credential;
 import org.opensaml.soap.client.http.AbstractPipelineHttpSOAPClient;
 import org.opensaml.soap.common.SOAPException;
 import org.opensaml.xmlsec.SignatureSigningParameters;
@@ -56,6 +57,8 @@ import net.shibboleth.utilities.java.support.httpclient.HttpClientBuilder;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.OpenSAMLUtils;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPConstants;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPCredentials;
+import org.opensaml.xmlsec.signature.Signature;
+import org.w3c.dom.Document;
 
 /**
  * Created by Privat on 4/6/14.
@@ -84,22 +87,22 @@ public class ConsumerServlet extends HttpServlet {
 
 		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
 		Assertion decryptedassertion = decryptAssertion(encryptedAssertion);
-		Assertion assertion = ((Response) artifactResponse.getMessage()).getAssertions().get(0);
+		Assertion assertion = getUnencryptedAssertion(artifactResponse);
 		
 		logger.info("Unencrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(assertion);
+		OpenSAMLUtils.logSAMLObjectRaw(assertion);
 		
-		logger.info("Decrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(decryptedassertion);
+		logger.info("Decrypted Assertion 123: ");
+		OpenSAMLUtils.logSAMLObjectRaw(decryptedassertion);
+		
+		logger.info("Begining Signature Verification ....");
+		verifyAssertionSignature(assertion);
+		logger.info("Signature Verification Successfull ....");		
 		
 		logger.info("Begining Signature Verification for decrypted asertion....");
 		verifyAssertionSignature(decryptedassertion);
 		logger.info("Signature Verification Successfull for decrypted asertion. ....");
 		
-		logger.info("Begining Signature Verification ....");
-		verifyAssertionSignature(assertion);
-		logger.info("Signature Verification Successfull ....");
-
 		logAssertionAttributes(assertion);
 		logAuthenticationInstant(assertion);
 		logAuthenticationMethod(assertion);
@@ -154,6 +157,12 @@ public class ConsumerServlet extends HttpServlet {
 		}
 	}
 
+	private Assertion getUnencryptedAssertion(ArtifactResponse artifactResponse) {
+		Assertion assertion = ((Assertion) ((Response) artifactResponse.getMessage()).getAssertions().get(0));
+		return assertion;
+
+	}
+	
 	private void verifyAssertionSignature(Assertion assertion) {
 
 		if (!assertion.isSigned()) {
@@ -161,14 +170,21 @@ public class ConsumerServlet extends HttpServlet {
 		}
 
 		try {
+			
 			SAMLSignatureProfileValidator profileValidator = new SAMLSignatureProfileValidator();
 			
+			logger.info("SAML Assertion getting signature ... ");
+			Signature sig = assertion.getSignature();
+			logger.info("Signature:");
+			OpenSAMLUtils.logSAMLObjectRaw(sig.getDOM());
+			logger.info("SAML Assertion gotten signature ... ");
+			
 			logger.info("SAML Assertion validating profile ... ");
-			profileValidator.validate(assertion.getSignature());
+			profileValidator.validate(sig);
 			logger.info("SAML Assertion validate profile successfull ... ");
 			
 			logger.info("SAML Assertion validating signature ... ");
-			SignatureValidator.validate(assertion.getSignature(), IDPCredentials.getCredential());
+			SignatureValidator.validate(sig, IDPCredentials.getCredential());
 
 			logger.info("SAML Assertion signature verified");
 		} catch (SignatureException e) {
