@@ -198,9 +198,9 @@ public class ConsumerServlet extends HttpServlet {
 			logger.info("SAML getSignatureReferenceID : " + sSignatureReferenceID);
 			logger.info("SAML able to get object by  refURI substring 1 : " + bCanGetRef);
 			
-			logger.info("SAML Assertion validating profile ... ");
-			profileValidator.validate(sig);
-			logger.info("SAML Assertion validate profile successfull ... ");
+			//logger.info("SAML Assertion validating profile ... ");
+			//profileValidator.validate(sig);
+			//logger.info("SAML Assertion validate profile successfull ... ");
 			
 			logger.info("SAML Assertion validating signature ... ");
 			SignatureValidator.validate(sig, IDPCredentials.getCredential());
