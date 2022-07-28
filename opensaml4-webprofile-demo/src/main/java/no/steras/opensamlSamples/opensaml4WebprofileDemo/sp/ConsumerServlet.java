@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.xml.security.signature.XMLSignature;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.schema.XSString;
 import org.opensaml.messaging.context.InOutOperationContext;
@@ -59,6 +60,9 @@ import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPConstants;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPCredentials;
 import org.opensaml.xmlsec.signature.Signature;
 import org.w3c.dom.Document;
+import org.opensaml.xmlsec.signature.impl.SignatureImpl;
+import org.apache.xml.security.signature.Reference;
+import org.opensaml.saml.common.SignableSAMLObject;
 
 /**
  * Created by Privat on 4/6/14.
@@ -175,9 +179,24 @@ public class ConsumerServlet extends HttpServlet {
 			
 			logger.info("SAML Assertion getting signature ... ");
 			Signature sig = assertion.getSignature();
+			SignatureImpl sigImpl = (SignatureImpl) assertion.getSignature();
+			
 			logger.info("Signature:");
 			OpenSAMLUtils.logSAMLObjectRaw(sig.getDOM());
 			logger.info("SAML Assertion gotten signature ... ");
+			
+			XMLSignature apacheSig = sigImpl.getXMLSignature();
+			Reference ref = apacheSig.getSignedInfo().item(0);
+			SignableSAMLObject signableObject = (SignableSAMLObject) sigImpl.getParent();
+			String refURI = ref.getURI();
+			String sSignatureReferenceID = signableObject.getSignatureReferenceID();
+			String uriID = refURI.substring(1);
+			boolean bCanGetRef = signableObject.getDOM().getOwnerDocument().getElementById(uriID) != null;
+			
+			logger.info("SAML getSignedInfo > URI : " + refURI);
+			logger.info("SAML getSignedInfo > refURI substring 1 : " + uriID);
+			logger.info("SAML getSignatureReferenceID : " + sSignatureReferenceID);
+			logger.info("SAML able to get object by  refURI substring 1 : " + bCanGetRef);
 			
 			logger.info("SAML Assertion validating profile ... ");
 			profileValidator.validate(sig);
@@ -189,6 +208,8 @@ public class ConsumerServlet extends HttpServlet {
 			logger.info("SAML Assertion signature verified");
 		} catch (SignatureException e) {
 			logger.error("SAML Assertion signature verification failure", e);
+		}catch (Exception ex) {
+			logger.error("SAML Assertion signature verification errors", ex);
 		}
 
 	}
