@@ -90,7 +90,7 @@ public class ConsumerServlet extends HttpServlet {
 		OpenSAMLUtils.logSAMLObject(assertion);
 		
 		logger.info("Decrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(assertion);
+		OpenSAMLUtils.logSAMLObject(decryptedassertion);
 		
 		logger.info("Begining Signature Verification for decrypted asertion....");
 		verifyAssertionSignature(decryptedassertion);
