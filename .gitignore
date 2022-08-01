@@ -1,6 +1,7 @@
 
 opensaml-http-post/target/
 opensaml-signing-and-verification/target/
-oepnsaml4-webprofile-demo/target/
+opensaml4-webprofile-demo/target/
+.iml
 .DS_Store
 /.idea/
