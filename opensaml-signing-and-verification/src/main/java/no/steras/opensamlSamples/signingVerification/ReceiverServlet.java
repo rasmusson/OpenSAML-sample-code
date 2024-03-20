@@ -42,7 +42,7 @@ import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 public class ReceiverServlet extends HttpServlet {
 	private static Logger logger = LoggerFactory.getLogger(ReceiverServlet.class);
 	private static final String SENDER_METADATA_PATH = "sender-metadata.xml";
-	private static final String SENDER_ENTITY_ID = "sender.example.com";
+	private static final String SENDER_ENTITY_ID = "azure.idp";
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -113,13 +113,16 @@ public class ReceiverServlet extends HttpServlet {
 		criteriaSet.add(new EntityIdCriterion(SENDER_ENTITY_ID));
 
 		// Resolve credential
+		logger.info("One");
 		Credential credential = metadataCredentialResolver.resolveSingle(criteriaSet);
 
 		// Verify signature format
+		logger.info("Two");
 		SAMLSignatureProfileValidator profileValidator = new SAMLSignatureProfileValidator();
 		profileValidator.validate(authnRequest.getSignature());
 
 		// Verify signature
+		logger.info("Three");
 		SignatureValidator.validate(authnRequest.getSignature(), credential);
 		logger.info("Signature verified using SignatureValidator");
 	}

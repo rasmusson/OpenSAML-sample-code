@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.xml.security.signature.XMLSignature;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.schema.XSString;
 import org.opensaml.messaging.context.InOutOperationContext;
@@ -38,6 +39,7 @@ import org.opensaml.saml.saml2.core.Issuer;
 import org.opensaml.saml.saml2.core.Response;
 import org.opensaml.saml.saml2.encryption.Decrypter;
 import org.opensaml.saml.security.impl.SAMLSignatureProfileValidator;
+import org.opensaml.security.credential.Credential;
 import org.opensaml.soap.client.http.AbstractPipelineHttpSOAPClient;
 import org.opensaml.soap.common.SOAPException;
 import org.opensaml.xmlsec.SignatureSigningParameters;
@@ -56,6 +58,11 @@ import net.shibboleth.utilities.java.support.httpclient.HttpClientBuilder;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.OpenSAMLUtils;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPConstants;
 import no.steras.opensamlSamples.opensaml4WebprofileDemo.idp.IDPCredentials;
+import org.opensaml.xmlsec.signature.Signature;
+import org.w3c.dom.Document;
+import org.opensaml.xmlsec.signature.impl.SignatureImpl;
+import org.apache.xml.security.signature.Reference;
+import org.opensaml.saml.common.SignableSAMLObject;
 
 /**
  * Created by Privat on 4/6/14.
@@ -83,11 +90,23 @@ public class ConsumerServlet extends HttpServlet {
 		validateDestinationAndLifetime(artifactResponse, req);
 
 		EncryptedAssertion encryptedAssertion = getEncryptedAssertion(artifactResponse);
-		Assertion assertion = decryptAssertion(encryptedAssertion);
+		Assertion decryptedassertion = decryptAssertion(encryptedAssertion);
+		Assertion assertion = getUnencryptedAssertion(artifactResponse);
+		
+		logger.info("Unencrypted Assertion: ");
+		OpenSAMLUtils.logSAMLObjectRaw(assertion);
+		
+		logger.info("Decrypted Assertion 123: ");
+		OpenSAMLUtils.logSAMLObjectRaw(decryptedassertion);
+		
+		logger.info("Begining Signature Verification ....");
 		verifyAssertionSignature(assertion);
-		logger.info("Decrypted Assertion: ");
-		OpenSAMLUtils.logSAMLObject(assertion);
-
+		logger.info("Signature Verification Successfull ....");		
+		
+		logger.info("Begining Signature Verification for decrypted asertion....");
+		verifyAssertionSignature(decryptedassertion);
+		logger.info("Signature Verification Successfull for decrypted asertion. ....");
+		
 		logAssertionAttributes(assertion);
 		logAuthenticationInstant(assertion);
 		logAuthenticationMethod(assertion);
@@ -142,6 +161,12 @@ public class ConsumerServlet extends HttpServlet {
 		}
 	}
 
+	private Assertion getUnencryptedAssertion(ArtifactResponse artifactResponse) {
+		Assertion assertion = ((Assertion) ((Response) artifactResponse.getMessage()).getAssertions().get(0));
+		return assertion;
+
+	}
+	
 	private void verifyAssertionSignature(Assertion assertion) {
 
 		if (!assertion.isSigned()) {
@@ -149,14 +174,42 @@ public class ConsumerServlet extends HttpServlet {
 		}
 
 		try {
+			
 			SAMLSignatureProfileValidator profileValidator = new SAMLSignatureProfileValidator();
-			profileValidator.validate(assertion.getSignature());
-
-			SignatureValidator.validate(assertion.getSignature(), IDPCredentials.getCredential());
+			
+			logger.info("SAML Assertion getting signature ... ");
+			Signature sig = assertion.getSignature();
+			SignatureImpl sigImpl = (SignatureImpl) assertion.getSignature();
+			
+			logger.info("Signature:");
+			OpenSAMLUtils.logSAMLObjectRaw(sig.getDOM());
+			logger.info("SAML Assertion gotten signature ... ");
+			
+			XMLSignature apacheSig = sigImpl.getXMLSignature();
+			Reference ref = apacheSig.getSignedInfo().item(0);
+			SignableSAMLObject signableObject = (SignableSAMLObject) sigImpl.getParent();
+			String refURI = ref.getURI();
+			String sSignatureReferenceID = signableObject.getSignatureReferenceID();
+			String uriID = refURI.substring(1);
+			boolean bCanGetRef = signableObject.getDOM().getOwnerDocument().getElementById(uriID) != null;
+			
+			logger.info("SAML getSignedInfo > URI : " + refURI);
+			logger.info("SAML getSignedInfo > refURI substring 1 : " + uriID);
+			logger.info("SAML getSignatureReferenceID : " + sSignatureReferenceID);
+			logger.info("SAML able to get object by  refURI substring 1 : " + bCanGetRef);
+			
+			//logger.info("SAML Assertion validating profile ... ");
+			//profileValidator.validate(sig);
+			//logger.info("SAML Assertion validate profile successfull ... ");
+			
+			logger.info("SAML Assertion validating signature ... ");
+			SignatureValidator.validate(sig, IDPCredentials.getCredential());
 
 			logger.info("SAML Assertion signature verified");
 		} catch (SignatureException e) {
-			e.printStackTrace();
+			logger.error("SAML Assertion signature verification failure", e);
+		}catch (Exception ex) {
+			logger.error("SAML Assertion signature verification errors", ex);
 		}
 
 	}

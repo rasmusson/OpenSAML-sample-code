@@ -58,8 +58,9 @@ public class SenderServlet extends HttpServlet {
 	private static final String ISSUER = "This should be the sender entityId";
 	private static final String KEY_STORE_PASSWORD = "password";
 	private static final String KEY_STORE_ENTRY_PASSWORD = "password";
-	private static final String KEY_STORE_PATH = "/senderKeystore.jks";
-	private static final String ENTITY_ID = "sender.example.com";
+	private static final String KEY_STORE_PATH = "/sapKeystore.jks";
+	private static final String ENTITY_ID = "azure.idp";
+	public static final String IDP_ENTITY_ID = "Test ID";
 
 	@Override
 	public void init() throws ServletException {
@@ -204,6 +205,9 @@ public class SenderServlet extends HttpServlet {
 		encoder.setMessageContext(context);
 		encoder.setHttpServletResponse(httpServletResponse);
 		encoder.setVelocityEngine(velocityEngine);
+
+		logger.info("SAML Response:");
+		OpenSAMLUtils.logSAMLObject(authnRequest);
 
 		try {
 			encoder.initialize();
