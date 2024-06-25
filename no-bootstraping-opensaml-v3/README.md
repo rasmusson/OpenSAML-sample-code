@@ -1,4 +1,4 @@
-# library not initialized in OpenSAML 3
+# Library not initialized in OpenSAML 3
 A simple code sample showing the error that is thrown if the OpenSAML library is not properly initialized. 
 
 [This blog post](https://blog.samlsecurity.com/2014/05/nullpointer-exception-in-opensaml.html/?utm_source=github&utm_medium=link&utm_campaign=no-bootstrap-opensaml&utm_id=no-bootstrap-opensaml&utm_content=no-bootstrap-opensaml) uses the code and explains the problem 
