@@ -9,4 +9,6 @@ These are the current samples in the collection
 * [Sending and receiving messages using HTTP Post](opensaml-http-post)
 * [OpenSAML 4 signing and signature verification](opensaml-signing-and-verification)
 * [OpenSAML 4 prettyprinting OpenSAML objects](opensaml-pretty-print)
+* [Exception thrown when OpenSAML 4 not initialized](no-bootstraping-opensaml-v4)
+* [Exception thrown when OpenSAML 3 not initialized](no-bootstraping-opensaml-v3)
 * [Getting started with OpenSAML 3](getting-started-opensamlv3) 
